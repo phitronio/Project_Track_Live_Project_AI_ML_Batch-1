@@ -16,6 +16,9 @@ class Settings(BaseSettings):
     DB_NAME: str = "sales_agent"
     DB_SCHEMA: str = "sales_agent"
 
+    GEMINI_API_KEY: SecretStr = SecretStr("")
+    GEMINI_MODEL: str = "gemini-3.5-flash-lite"
+
     @property
     def DATABASE_URL(self) -> URL:
         return URL.create(
