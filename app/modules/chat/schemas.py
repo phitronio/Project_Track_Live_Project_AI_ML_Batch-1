@@ -11,3 +11,7 @@ class ChatResponse(BaseModel):
 class ConversationRequest(BaseModel):
     content: str = Field(min_length=1, max_length=2000)
     history: list[ChatMessage] = Field(default=[], max_length=20)
+    
+class AssistantResponse(BaseModel):
+    reply: str
+    tool_calls: list[str] = []
