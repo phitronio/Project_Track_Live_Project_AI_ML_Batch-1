@@ -38,5 +38,16 @@ services:
       timeout: 5s
       retries: 10
 
+  embedder:
+    image: ghcr.io/huggingface/text-embeddings-inference:cpu-1.9.4
+    container_name: sales-agent-embedder
+    restart: unless-stopped
+    command: --model-id unsloth/embeddinggemma-300m
+    ports:
+      - "8090:80"
+    volumes:
+      - sales-agent-hf-cache:/data
+
 volumes:
   sales-agent-db-data:
+  sales-agent-hf-cache:

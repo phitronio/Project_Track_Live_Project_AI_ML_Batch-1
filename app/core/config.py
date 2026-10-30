@@ -18,6 +18,8 @@ class Settings(BaseSettings):
 
     GEMINI_API_KEY: SecretStr = SecretStr("")
     GEMINI_MODEL: str = "gemini-3.5-flash-lite"
+    
+    EMBEDDINGS_URL: str = "http://127.0.0.1:8090"
 
     @property
     def DATABASE_URL(self) -> URL:

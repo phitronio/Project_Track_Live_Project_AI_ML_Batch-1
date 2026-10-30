@@ -14,11 +14,11 @@ settings = get_settings()
 
 engine = create_async_engine(
     settings.DATABASE_URL,
-    echo=settings.DEBUG,  # log SQL queries
+    echo=settings.DEBUG,
     pool_size=5,
     max_overflow=10,
-    pool_pre_ping=True,  # ping the database to check if it's still alive
-    connect_args={"server_settings": {"search_path": settings.DB_SCHEMA}},
+    pool_pre_ping=True,
+    connect_args={"server_settings": {"search_path": f"{settings.DB_SCHEMA},public"}},
 )
 
 SessionLocal = async_sessionmaker(
