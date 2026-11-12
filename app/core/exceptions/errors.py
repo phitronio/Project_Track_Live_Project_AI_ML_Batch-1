@@ -18,3 +18,11 @@ class ConflictError(AppError):
 
 class LLMUnavailableError(AppError):
     """Raised wehn the LLM Provider fails"""
+
+
+class UnauthorizedError(AppError):
+    """Raised when the caller is not logged in, or the token is bad."""
+
+
+class ForbiddenError(AppError):
+    """Raised when the caller is logged in but not allowed to do this."""

@@ -1,9 +1,15 @@
+import enum
 import uuid
 
-from sqlalchemy import Boolean, String
+from sqlalchemy import Boolean, Enum, String
 from sqlalchemy.orm import Mapped, mapped_column
 
 from app.db.base import Base, TimeStampMixin
+
+
+class Role(str, enum.Enum):
+    CUSTOMER = "customer"
+    ADMIN = "admin"
 
 
 class User(Base, TimeStampMixin):
@@ -14,4 +20,14 @@ class User(Base, TimeStampMixin):
     password: Mapped[str] = mapped_column(String(255))
     is_active: Mapped[bool] = mapped_column(
         Boolean, default=True, server_default="true"
+    )
+    role: Mapped[Role] = mapped_column(
+        Enum(
+            Role,
+            native_enum=False,
+            length=20,
+            values_callable=lambda e: [m.value for m in e],
+        ),
+        default=Role.CUSTOMER,
+        server_default=Role.CUSTOMER.value,
     )

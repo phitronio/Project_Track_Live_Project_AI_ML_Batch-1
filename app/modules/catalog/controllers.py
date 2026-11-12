@@ -1,6 +1,6 @@
 from typing import Annotated
 
-from fastapi import APIRouter, Query, status
+from fastapi import APIRouter, Depends, Query, status
 
 from app.modules.catalog.dependencies import ProductServiceDep
 from app.modules.catalog.schemas import (
@@ -10,6 +10,7 @@ from app.modules.catalog.schemas import (
     ProductRead,
     ProductUpdate,
 )
+from app.modules.users.dependencies import require_admin
 
 router = APIRouter(prefix="/products", tags=["products"])
 
@@ -26,7 +27,7 @@ async def get_product(slug: str, service: ProductServiceDep) -> ProductRead:
     return await service.get_product(slug)
 
 
-@router.post("", response_model=ProductRead)
+@router.post("", response_model=ProductRead, dependencies=[Depends(require_admin)])
 async def create_product(
     data: ProductCreate, service: ProductServiceDep
 ) -> ProductRead:

@@ -1,6 +1,6 @@
 from functools import lru_cache
 
-from pydantic import SecretStr
+from pydantic import Field, SecretStr
 from pydantic_settings import BaseSettings, SettingsConfigDict
 from sqlalchemy.engine import URL
 
@@ -18,8 +18,12 @@ class Settings(BaseSettings):
 
     GEMINI_API_KEY: SecretStr = SecretStr("")
     GEMINI_MODEL: str = "gemini-3.5-flash-lite"
-    
+
     EMBEDDINGS_URL: str = "http://127.0.0.1:8090"
+
+    JWT_SECRET: SecretStr = Field(min_length=32)
+    JWT_ALGORITHM: str = "HS256"
+    ACCESS_TOKEN_MINUTES: int = 30
 
     @property
     def DATABASE_URL(self) -> URL:
